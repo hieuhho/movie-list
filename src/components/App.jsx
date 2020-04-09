@@ -11,8 +11,9 @@ class App extends React.Component {
 
     this.state = {
       search: '',
-      movies: props.moviesData,
-      userCustom: [],
+      allMovies: props.moviesData,
+      visibleMovies: [],
+      userAdded: [],
       value: ''
     };
 
@@ -21,9 +22,22 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.checkVisible();
+  }
+
+  checkVisible() {
+    if (this.state.visibleMovies.length === 0) {
+      this.setState({
+        visibleMovies: this.state.allMovies
+      })
+    }
+  }
+
   handleSearch(event) {
     this.setState({
-      search: event.target.value
+      search: event.target.value,
+      visibleMovies: this.state.allMovies
     })
   }
 
@@ -43,8 +57,18 @@ class App extends React.Component {
     let director = 'Hieu Ho';
     let id = Math.floor(Math.random() * 100);
 
+    let newMovie = this.state.allMovies.concat({id, title, released, director});
+
+    if(this.state.value !== '') {
+      this.setState({
+        allMovies: newMovie,
+        visibleMovies: this.state.userAdded.concat({id, title, released, director}),
+        userAdded: this.state.userAdded.concat({id, title, released, director})
+      })
+    }
+
     this.setState({
-      movies: this.state.userCustom.concat({id, title, released, director}),
+      allMovies: newMovie,
       value: ''
     })
   }
@@ -89,7 +113,7 @@ class App extends React.Component {
 
         <div>
           <MoviesList
-            moviesData={this.state} />
+            state={this.state} />
         </div>
 
       </div>
