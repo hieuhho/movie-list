@@ -5,16 +5,13 @@ var AddMovie = (props) => (
     <form onSubmit={props.handleSubmit}>
       <input
         type="text"
-        placeholder="Title"
+        placeholder="Add Movie"
         value={props.value}
         onChange={props.onChange}
-      />
-
+         />
       <button type="submit">Add a Movie</button>
     </form>
   </div>
 );
 
 export default AddMovie;
-{/* <input type="text" placeholder="Released Date"/>
-<input type="text" placeholder="Director"/> */}
