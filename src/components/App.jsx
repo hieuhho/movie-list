@@ -12,8 +12,13 @@ class App extends React.Component {
     this.state = {
       search: '',
       movies: props.moviesData,
+      userCustom: [],
       value: ''
     };
+
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSearch(event) {
@@ -23,6 +28,8 @@ class App extends React.Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
+
     this.setState({
       value: event.target.value
     });
@@ -30,18 +37,21 @@ class App extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
     let title = this.state.value;
     let released = 'Unknown';
     let director = 'Hieu Ho';
     let id = Math.floor(Math.random() * 100);
 
     this.setState({
-      movies: this.state.movies.concat({id, title, released, director})
+      movies: this.state.userCustom.concat({id, title, released, director}),
+      value: ''
     })
   }
 
   render() {
     return (
+
       <div>
 
         <nav className="top-nav">
@@ -56,16 +66,25 @@ class App extends React.Component {
         <div>
           <Search
             search={this.state.search}
-            onChange={this.handleSearch.bind(this)}
+            onChange={this.handleSearch}
             />
         </div>
 
         <div>
-          <AddMovie
+          <div className="addMovie">
+            <form onSubmit={this.handleSubmit}>
+              <input
+                type="text"
+                placeholder="Add Movie"
+                value={this.state.value}
+                onChange={this.handleChange} />
+              <button type="submit">Add a Movie</button>
+            </form>
+          </div>
+          {/* <AddMovie
             value={this.state.value}
-            onChange={this.handleChange.bind(this)}
-            onSubmit={this.handleSubmit.bind(this)}
-          />
+            onChange={this.handleChange}
+            onSubmit={this.handleSubmit} /> */}
         </div>
 
         <div>
@@ -79,29 +98,3 @@ class App extends React.Component {
 };
 
 export default App;
-
-
-{/* <div className="search-bar">
-  <input
-    type="text"
-    placeholder='Search something...'
-    value={this.state.search}
-    onChange={(event) => this.handleSearch(event)}
-    onSubmit={(event) => this.addMovie(event)} />
-
-    <form onSubmit={props.onSubmit}>
-    <input type="text" ref="title" />
-    <button type="submit">Add a Movie</button>
-    </form>
-  <button>Search!</button>
-</div> */}
-{/* <div className="moviesList">
-<ul>
-{this.props.moviesData.filter((movie) =>
-      {
-        return movie.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
-      }).map((movie) => {
-  return <Movie movie={movie} key={movie.id} />
-})}
-</ul>
-</div> */}
