@@ -2,11 +2,10 @@ import React from 'react';
 
 var AddMovie = (props) => (
   <div className="addMovie">
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={props.onSubmit}>
       <input
         type="text"
         placeholder="Add Movie"
-        value={props.value}
         onChange={props.onChange}
          />
       <button type="submit">Add a Movie</button>

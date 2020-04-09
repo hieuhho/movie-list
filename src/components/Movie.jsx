@@ -1,11 +1,14 @@
 import React from 'react';
 
 var Movie = (props) => (
-  <div className="movie">
-      <li>
+  // console.log(props.state),
+
+    <li className={props.state.watchedToggle ? "watched" : "not-watched"}>
+
         {props.movie.title}
-      </li>
-  </div>
+
+    <button onClick={props.onClick}>{props.state.watchedToggle ? 'Watched' : 'To Watchlist'}</button>
+    </li>
 );
 
 export default Movie;
