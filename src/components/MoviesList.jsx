@@ -5,9 +5,9 @@ import moviesData from './moviesData.js';
 var MoviesList = (props) => (
   <div className="moviesList">
     <ul>
-      {props.moviesData.movies.filter((movie) =>
+      {props.state.visibleMovies.filter((movie) =>
             {
-              return movie.title.toLowerCase().indexOf(props.moviesData.search.toLowerCase()) !== -1;
+              return movie.title.toLowerCase().indexOf(props.state.search.toLowerCase()) !== -1;
             }).map((movie) => {
         return <Movie movie={movie} key={movie.id} />
       })}
