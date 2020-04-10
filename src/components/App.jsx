@@ -92,17 +92,17 @@ class App extends React.Component {
     let release_date = 'Unknown';
     let director = 'Hieu Ho';
     let runtime = 1234;
-    let vote_average: 132;
+    let vote_average = 322;
     let id = Math.floor(Math.random() * 100);
     let watchedToggle = false;
 
-    let newMovie = this.state.allMovies.concat({id, title, released, director, watchedToggle});
+    let newMovie = this.state.allMovies.concat({id, title, release_date, director, watchedToggle, runtime, vote_average});
 
     if(this.state.value !== '') {
       this.setState({
         allMovies: newMovie,
-        visibleMovies: this.state.addMovie.concat({id, title, released, director, watchedToggle}),
-        addMovie: this.state.addMovie.concat({id, title, released, director, watchedToggle})
+        visibleMovies: this.state.addMovie.concat({id, title, release_date, director, watchedToggle, runtime, vote_average}),
+        addMovie: this.state.addMovie.concat({id, title, release_date, director, watchedToggle, runtime, vote_average})
       })
     }
 
