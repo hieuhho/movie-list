@@ -14,9 +14,9 @@ class App extends React.Component {
       value: '',
       allMovies: props.moviesData,
       watchList: [],
-      visibleMovies: [],
       addMovie: [],
-      watchedToggle: true
+      watchedToggle: true,
+      infoClicked: false
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -25,19 +25,9 @@ class App extends React.Component {
     this.toggleWatch = this.toggleWatch.bind(this);
     this.moveToWatched = this.moveToWatched.bind(this);
     this.moveToWatchList = this.moveToWatchList.bind(this);
+    this.handleInfo = this.handleInfo.bind(this);
   }
 
-  componentDidMount() {
-    this.checkVisible();
-  }
-
-  checkVisible() {
-    if (this.state.visibleMovies.length === 0) {
-      this.setState({
-        visibleMovies: this.state.allMovies
-      })
-    }
-  }
 
   handleSearch(event) {
     this.setState({
@@ -114,6 +104,20 @@ class App extends React.Component {
     }
   }
 
+  handleInfo(e) {
+    e.preventDefault();
+    let currentTitle = e.currentTarget.dataset.id;
+    for (var i = 0; i < moviesData.length; i++) {
+      if (moviesData[i].title === currentTitle) {
+        console.log(i)
+      }
+    }
+    this.setState({
+      infoClicked: !this.state.infoClicked
+    })
+    console.log('this.state.infoClicked: ', this.state.infoClicked);
+  }
+
   render() {
 
     let filterWatched = this.state.allMovies.filter((movie) => {return movie.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;});
@@ -134,46 +138,25 @@ class App extends React.Component {
         </nav>
 
         <div>
-          <Search search={this.state.search} onChange={this.handleSearch}/>
+          <AddMovie handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
         </div>
 
         <div>
-          <AddMovie onChange={this.handleChange} onSubmit={this.handleSubmit} />
+          <button className="watchedTab" onClick={!this.state.watchedToggle ? this.toggleWatch : null}>Watched</button>
+
+          <button className="watchListTab" onClick={this.state.watchedToggle ? this.toggleWatch : null}>Watch List</button>
+
+          <Search search={this.state.search} onChange={this.handleSearch} changetile={this.changeTitle}/>
         </div>
 
         <div>
-          <button className="tab" onClick={!this.state.watchedToggle ? this.toggleWatch : null}>Watched</button>
-
-          <button className="tab" onClick={this.state.watchedToggle ? this.toggleWatch : null}>Watch List</button>
-        </div>
-
-        <div>
-        <div className="moviesList">
-          {this.state.watchedToggle ?
-            <div className="Watched">
-            <ul>
-              {filterWatched.map((movie) => {
-                return <li key={movie.id}>
-                    {movie.title}
-                    <button value={movie.title} onClick={this.moveToWatchList}>Add To WatchList</button>
-                </li>
-              })}
-            </ul>
-          </div> : null }
-
-          {!this.state.watchedToggle ?
-            <div className="watchList">
-            <ul>
-              {filterWatchList.map((movie) => {
-                return <li key={movie.id}>
-                  {movie.title}
-                <button value={movie.title} onClick={this.moveToWatched}>Add To Watched</button>
-                </li>
-              })}
-            </ul>
-          </div> : null }
-          </div>
-
+          <MoviesList
+            filterWatched={filterWatched}
+            filterWatchList={filterWatchList}
+            watchedToggle={this.state.watchedToggle}
+            handleInfo={this.handleInfo}
+            moveToWatchList={this.moveToWatchList}
+            moveToWatched={this.moveToWatched} />
         </div>
 
       </div>
