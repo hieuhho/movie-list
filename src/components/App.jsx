@@ -34,18 +34,39 @@ class App extends React.Component {
     let self = this;
     $.ajax({
       url: "https://api.themoviedb.org/3/search/movie?",
+      type: "GET",
       data: {
         api_key: API_KEY,
         query: query,
       },
-      contentType: 'application/json',
-      success: (data) => {
-        callback(data.results),
-        console.log('Ajax success')
-      },
+      contentType: "application/json",
+      success: getMovieInfo(data.results[0].id),
       error: function(response) {
         console.error('ajax error', response)
       }
+    })
+  }
+
+  getMovieInfo(dataId) {
+    $.ajax({
+      url: `"https://api.themoviedb.org/3/movie/"${dataId}`,
+      type: "GET",
+      data: {
+        api_key: API_KEY
+      },
+      contentType: "application/json",
+      success: addMovieData(data),
+      error: function(response) {
+        console.error('ajax error', response)
+      }
+    })
+  }
+
+  addMovieData(movieObjData) {
+    let copy = this.state.allMovies;
+    copy.push(movieObjData);
+    this.setState({
+      allMovies: copy
     })
   }
 
@@ -68,8 +89,10 @@ class App extends React.Component {
     event.preventDefault();
 
     let title = this.state.value;
-    let released = 'Unknown';
+    let release_date = 'Unknown';
     let director = 'Hieu Ho';
+    let runtime = 1234;
+    let vote_average: 132;
     let id = Math.floor(Math.random() * 100);
     let watchedToggle = false;
 
