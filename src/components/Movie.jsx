@@ -6,37 +6,21 @@ var Movie = (props) => (
 
     {props.watchedToggle ?
       <li key={props.movie.id}>
-        <span value={props.movie.title} onClick={props.handleInfo}> {props.movie.title} </span>
+        <span data-id={props.movie.title} onClick={props.handleInfo}> {props.movie.title} </span>
 
-        {props.infoToggle &&
-
-        // <MovieInfo movie={props.movie} />
-
-          <div className='movieInfo'>
-            <div className='leftInfo'>
-              <div>Director: {props.movie.director}</div>
-              <div>Released Date: {props.movie.released}</div>
-            </div>
-         </div>}
+        {props.infoToggle && (props.selected === props.movie.title) && <MovieInfo movie={props.movie} /> }
 
         <button value={props.movie.title} onClick={props.moveToWatchList}>Add To WatchList</button>
-      </li> : null
-    }
+      </li> : null}
 
     {!props.watchedToggle ?
       <li key={props.movie.id}>
-        <span value={props.movie.title} onClick={props.handleInfo}> {props.movie.title} </span>
+        <span data-id={props.movie.title} onClick={props.handleInfo}> {props.movie.title} </span>
 
-        {props.infoToggle && <div className='movieInfo'>
-          <div className='leftInfo'>
-            <div>Released Date: {props.movie.released}</div>
-            <div>Director: {props.movie.director}</div>
-          </div>
-        </div>}
+        {props.infoToggle && (props.selected === props.movie.title) && <MovieInfo movie={props.movie} /> }
 
         <button value={props.movie.title} onClick={props.moveToWatched}>Add To Watched</button>
-      </li> : null
-    }
+      </li> : null}
 
   </div>
 

@@ -7,7 +7,7 @@ var MoviesList = (props) => (
     <div className="Watched">
     <ul>
       {props.filterWatched.map((movie) => {
-        return <Movie movie={movie} key={movie.id} watchedToggle={props.watchedToggle} handleInfo={props.handleInfo} moveToWatchList={props.moveToWatchList} infoToggle={props.infoToggle}/>
+        return <Movie movie={movie} key={movie.id} watchedToggle={props.watchedToggle} handleInfo={props.handleInfo} moveToWatchList={props.moveToWatchList} infoToggle={props.infoToggle} selected={props.selected}/>
       })}
     </ul>
   </div> : null }
@@ -16,7 +16,7 @@ var MoviesList = (props) => (
     <div className="watchList">
     <ul>
       {props.filterWatchList.map((movie) => {
-        return <Movie movie={movie} key={movie.id} watchedToggle={props.watchedToggle} handleInfo={props.handleInfo} moveToWatched={props.moveToWatched} infoToggle={props.infoToggle} />
+        return <Movie movie={movie} key={movie.id} watchedToggle={props.watchedToggle} handleInfo={props.handleInfo} moveToWatched={props.moveToWatched} infoToggle={props.infoToggle} selected={props.selected}/>
       })}
     </ul>
   </div> : null }

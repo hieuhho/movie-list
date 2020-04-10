@@ -17,7 +17,8 @@ class App extends React.Component {
       watchList: [],
       addMovie: [],
       watchedToggle: true,
-      infoClicked: false
+      infoClicked: false,
+      selectedMovie: ''
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -27,6 +28,25 @@ class App extends React.Component {
     this.moveToWatched = this.moveToWatched.bind(this);
     this.moveToWatchList = this.moveToWatchList.bind(this);
     this.handleInfo = this.handleInfo.bind(this);
+  }
+
+  searchMovie(query, callback) {
+    let self = this;
+    $.ajax({
+      url: "https://api.themoviedb.org/3/search/movie?",
+      data: {
+        api_key: API_KEY,
+        query: query,
+      },
+      contentType: 'application/json',
+      success: (data) => {
+        callback(data.results),
+        console.log('Ajax success')
+      },
+      error: function(response) {
+        console.error('ajax error', response)
+      }
+    })
   }
 
 
@@ -107,11 +127,14 @@ class App extends React.Component {
 
   handleInfo(event) {
     event.preventDefault();
-    this.setState({
-      infoClicked: !this.state.infoClicked
-    })
-    console.log('this.state.infoClicked: ', this.state.infoClicked);
-  }
+    let current = event.currentTarget.dataset.id;
+        this.setState({
+          infoClicked: !this.state.infoClicked,
+          selectedMovie: current
+        })
+        console.log('this.state.infoClicked: ', this.state.infoClicked);
+      }
+
 
   render() {
 
@@ -152,7 +175,8 @@ class App extends React.Component {
             handleInfo={this.handleInfo}
             moveToWatchList={this.moveToWatchList}
             moveToWatched={this.moveToWatched}
-            infoToggle={this.state.infoClicked} />
+            infoToggle={this.state.infoClicked}
+            selected={this.state.selectedMovie}/>
         </div>
 
       </div>
