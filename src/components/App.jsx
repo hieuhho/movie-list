@@ -29,9 +29,12 @@ class App extends React.Component {
     this.moveToWatched = this.moveToWatched.bind(this);
     this.moveToWatchList = this.moveToWatchList.bind(this);
     this.handleInfo = this.handleInfo.bind(this);
+    this.searchMovie = this.searchMovie.bind(this);
+    this.addMovieData = this.addMovieData.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
-  searchMovie(query, callback) {
+  searchMovie(query) {
     let self = this;
     $.ajax({
       url: "https://api.themoviedb.org/3/search/movie?",
@@ -41,42 +44,33 @@ class App extends React.Component {
         query: query,
       },
       contentType: "application/json",
-      success: getMovieInfo(data.results[0].id),
+      success: (response) => {
+        console.log('response: ', response.results[0])
+        this.addMovieData(response.results[0])},
       error: function(response) {
-        console.error('ajax error', response)
+        console.error('ajax error search movie', response)
       }
     })
   }
 
-  getMovieInfo(dataId) {
-    $.ajax({
-      url: `"https://api.themoviedb.org/3/movie/"${dataId}`,
-      type: "GET",
-      data: {
-        api_key: API_KEY
-      },
-      contentType: "application/json",
-      success: addMovieData(data),
-      error: function(response) {
-        console.error('ajax error', response)
-      }
-    })
-  }
 
   addMovieData(movieObjData) {
-    let copy = this.state.allMovies;
-    copy.push(movieObjData);
+    let newMovieInfo = [{
+      id: movieObjData.id,
+      title: movieObjData.title,
+      release_date: movieObjData.release_date,
+      vote: movieObjData.vote_average,
+      overview: movieObjData.overview
+    }]
+    let addToAll = this.state.allMovies.concat(newMovieInfo)
     this.setState({
-      allMovies: copy
+      allMovies: addToAll
     })
   }
 
   handleSearchSubmit(event) {
     event.preventDefault();
-    console.log(event)
-    console.log('handleSearchSubmit');
-
-    searchMovie(this.state.search)
+    this.searchMovie(this.state.search)
   }
 
   handleSearch(event) {
@@ -96,13 +90,13 @@ class App extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    let title = this.state.value;
+    let title = tpushhis.state.value;
     let release_date = 'May 22, 1995';
     let director = 'Hieu Ho';
     let runtime = 1234;
     let vote_average = 322;
     let id = Math.floor(Math.random() * 100);
-    let watchedToggle = false;
+    let watchedToggle = false;handleSearchSubmit
 
     let newMovie = this.state.allMovies.concat({id, title, release_date, director, watchedToggle, runtime, vote_average});
 
