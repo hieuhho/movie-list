@@ -60,7 +60,8 @@ class App extends React.Component {
       title: movieObjData.title,
       release_date: movieObjData.release_date,
       vote: movieObjData.vote_average,
-      overview: movieObjData.overview
+      overview: movieObjData.overview,
+      popularity: movieObjData.popularity
     }]
     let addToAll = this.state.allMovies.concat(newMovieInfo)
     this.setState({
@@ -90,21 +91,24 @@ class App extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    let title = tpushhis.state.value;
-    let release_date = 'May 22, 1995';
-    let director = 'Hieu Ho';
-    let runtime = 1234;
-    let vote_average = 322;
-    let id = Math.floor(Math.random() * 100);
-    let watchedToggle = false;handleSearchSubmit
+    let userAddMovie = [{
+      title: this.state.value,
+      release_date: 'May 22, 1995',
+      director: 'Hieu Ho',
+      vote: 322,
+      overview: "This movie was made with your contributions, thank you",
+      id: Math.floor(Math.random() * 100),
+      watchedToggle: false,
+      popularity: "It's the best"
+    }]
 
-    let newMovie = this.state.allMovies.concat({id, title, release_date, director, watchedToggle, runtime, vote_average});
+    let newMovie = this.state.allMovies.concat(userAddMovie);
 
     if(this.state.value !== '') {
       this.setState({
         allMovies: newMovie,
-        visibleMovies: this.state.addMovie.concat({id, title, release_date, director, watchedToggle, runtime, vote_average}),
-        addMovie: this.state.addMovie.concat({id, title, release_date, director, watchedToggle, runtime, vote_average})
+        visibleMovies: this.state.addMovie.concat(userAddMovie),
+        addMovie: this.state.addMovie.concat(userAddMovie)
       })
     }
 
