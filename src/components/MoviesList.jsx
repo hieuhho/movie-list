@@ -3,20 +3,31 @@ import Movie from './Movie.jsx';
 
 var MoviesList = (props) => (
   <div className="moviesList">
+
       {!props.state.watchedToggle ?
-      <div id="filterID" className="Watched">
+      <div className="Watched">
         <ul>
           {props.filterWatched.map((movie) => {
-            return <Movie movie={movie} key={movie.id} state={props.state} onClick={props.onClick}/>
+            return
+              <li key={movie.id} >
+                {movie.title}
+                <button value={movie.title}
+                onClick={props.addToWatchList}>Add To WatchList</button>
+             </li>
           })}
         </ul>
       </div> : null }
 
       {props.state.watchedToggle ?
-      <div id="filterID" className="watchList">
+      <div className="watchList">
         <ul>
           {props.filterToWatch.map((movie) => {
-            return <Movie movie={movie} key={movie.id} state={props.state} onClick={props.onClick}/>
+            return
+            <li key={movie.id} >
+              {movie.title}
+            <button value={movie.title}
+            onClick={props.addToWatched}>Add To Watched</button>
+            </li>
           })}
         </ul>
       </div> : null }
