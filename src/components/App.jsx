@@ -16,13 +16,15 @@ class App extends React.Component {
       watchList: [],
       visibleMovies: [],
       addMovie: [],
-      watchedToggle: false
+      watchedToggle: true
     };
 
     this.handleSearch = this.handleSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleWatch = this.toggleWatch.bind(this);
+    this.moveToWatched = this.moveToWatched.bind(this);
+    this.moveToWatchList = this.moveToWatchList.bind(this);
   }
 
   componentDidMount() {
@@ -78,38 +80,36 @@ class App extends React.Component {
 
   toggleWatch(event){
     event.preventDefault();
-    console.log(this.state.watchedToggle)
+    console.log('is Toggled', this.state.watchedToggle)
     this.setState({
       watchedToggle: !this.state.watchedToggle
     })
   }
 
-  moveBetweenLists(event) {
-    if (document.getElementByID("filterID").className === "Watched") {
-      let copy = this.state.allMovies.slice();
-      for (var i = 0; i < copy.length; i++) {
-        if (copy[i].title === event.target.value) {
-          copy.splice(i, 1);
-          let newMovie = this.state.watchList.concat({title: event.target.value})
-          this.setState({
-            allMovies: copy,
-            watchList: newMovie
-          })
-          break;
-        }
+  moveToWatchList(event) {
+    let copy = this.state.allMovies.slice();
+    for (var i = 0; i < copy.length; i++) {
+      if (copy[i].title === event.target.value) {
+        let removed = copy.splice(i, 1);
+        let newMovie = this.state.watchList.concat(removed)
+        this.setState({
+          allMovies: copy,
+          watchList: newMovie
+        })
       }
-    } else if (document.getElementByID("filterID").className === "watchList") {
-      let copy = this.state.watchList.slice();
-      for (var i = 0; i < copy.length; i++) {
-        if (copy[i].title === event.target.value) {
-          copy.splice(i, 1);
-          let newMovie = this.state.allMovies.concat({title: event.target.value})
-          this.setState({
-            allMovies: newMovie,
-            watchList: copy
-          })
-          break;
-        }
+    }
+  }
+
+  moveToWatched(event) {
+    let copy = this.state.watchList.slice();
+    for (var i = 0; i < copy.length; i++) {
+      if (copy[i].title === event.target.value) {
+        let removed = copy.splice(i, 1);
+        let newMovie = this.state.allMovies.concat(removed)
+        this.setState({
+          allMovies: newMovie,
+          watchList: copy
+        })
       }
     }
   }
@@ -118,7 +118,7 @@ class App extends React.Component {
 
     let filterWatched = this.state.allMovies.filter((movie) => {return movie.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;});
 
-    let filterToWatch = this.state.watchList.filter((movie) => {return movie.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;});
+    let filterWatchList = this.state.watchList.filter((movie) => {return movie.title.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;});
 
     return (
 
@@ -142,13 +142,38 @@ class App extends React.Component {
         </div>
 
         <div>
-          <button className="watchedTab" onClick={this.state.watchedToggle ? this.toggleWatch : null}>Watched</button>
+          <button className="tab" onClick={!this.state.watchedToggle ? this.toggleWatch : null}>Watched</button>
 
-          <button className="watchlistTab" onClick={!this.state.watchedToggle ? this.toggleWatch : null}>Watch List</button>
+          <button className="tab" onClick={this.state.watchedToggle ? this.toggleWatch : null}>Watch List</button>
         </div>
 
         <div>
-          <MoviesList state={this.state} onClick={this.moveBetweenLists} filterWatched={filterWatched} filterToWatch={filterToWatch} />
+        <div className="moviesList">
+          {this.state.watchedToggle ?
+            <div className="Watched">
+            <ul>
+              {filterWatched.map((movie) => {
+                return <li key={movie.id}>
+                    {movie.title}
+                    <button value={movie.title} onClick={this.moveToWatchList}>Add To WatchList</button>
+                </li>
+              })}
+            </ul>
+          </div> : null }
+
+          {!this.state.watchedToggle ?
+            <div className="watchList">
+            <ul>
+              {filterWatchList.map((movie) => {
+                return <li key={movie.id}>
+                  {movie.title}
+                <button value={movie.title} onClick={this.moveToWatched}>Add To Watched</button>
+                </li>
+              })}
+            </ul>
+          </div> : null }
+          </div>
+
         </div>
 
       </div>
@@ -157,3 +182,5 @@ class App extends React.Component {
 };
 
 export default App;
+
+{/* <MoviesList state={this.state} onClick={this.moveBetweenLists} filterWatched={filterWatched} filterToWatch={filterToWatch} /> */}
