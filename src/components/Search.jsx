@@ -6,7 +6,7 @@ var Search = (props) => (
       type="text"
       placeholder="Search something..."
       search={props.value}
-      onChange={props.onChange} />
+      onChange={props.handleSearch} />
       <button>Search!</button>
   </span>
 );

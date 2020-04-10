@@ -4,7 +4,8 @@ import Movie from './Movie.jsx';
 import MoviesList from './MoviesList.jsx';
 import moviesData from './moviesData.js';
 import AddMovie from './AddMovie.jsx';
-import MovieInfo from './MovieInfo.jsx'
+import MovieInfo from './MovieInfo.jsx';
+import API_KEY from './api_key.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -89,7 +90,7 @@ class App extends React.Component {
     event.preventDefault();
 
     let title = this.state.value;
-    let release_date = 'Unknown';
+    let release_date = 'May 22, 1995';
     let director = 'Hieu Ho';
     let runtime = 1234;
     let vote_average = 322;
@@ -187,7 +188,7 @@ class App extends React.Component {
 
           <button className="watchListTab" onClick={this.state.watchedToggle ? this.toggleWatch : null}>Watch List</button>
 
-          <Search search={this.state.search} onChange={this.handleSearch} changetile={this.changeTitle}/>
+          <Search search={this.state.search} handleSearch={this.handleSearch} handleSearchSubmit={this.handleSearchSubmit}/>
         </div>
 
         <div>
