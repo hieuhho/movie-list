@@ -19,7 +19,7 @@ class App extends React.Component {
       addMovie: [],
       watchedToggle: true,
       infoClicked: false,
-      selectedMovie: ''
+      selectedMovie: '',
     };
 
     this.handleSearch = this.handleSearch.bind(this);
@@ -71,6 +71,13 @@ class App extends React.Component {
     })
   }
 
+  handleSearchSubmit(event) {
+    event.preventDefault();
+    console.log(event)
+    console.log('handleSearchSubmit');
+
+    searchMovie(this.state.search)
+  }
 
   handleSearch(event) {
     this.setState({

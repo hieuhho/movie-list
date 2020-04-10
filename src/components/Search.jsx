@@ -7,7 +7,7 @@ var Search = (props) => (
       placeholder="Search something..."
       search={props.value}
       onChange={props.handleSearch} />
-      <button>Search!</button>
+      <button onSubmit={props.handleSearchSubmit}>Search!</button>
   </span>
 );
 
