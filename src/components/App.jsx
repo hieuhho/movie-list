@@ -4,6 +4,7 @@ import Movie from './Movie.jsx';
 import MoviesList from './MoviesList.jsx';
 import moviesData from './moviesData.js';
 import AddMovie from './AddMovie.jsx';
+import MovieInfo from './MovieInfo.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -104,14 +105,8 @@ class App extends React.Component {
     }
   }
 
-  handleInfo(e) {
-    e.preventDefault();
-    let currentTitle = e.currentTarget.dataset.id;
-    for (var i = 0; i < moviesData.length; i++) {
-      if (moviesData[i].title === currentTitle) {
-        console.log(i)
-      }
-    }
+  handleInfo(event) {
+    event.preventDefault();
     this.setState({
       infoClicked: !this.state.infoClicked
     })
@@ -156,7 +151,8 @@ class App extends React.Component {
             watchedToggle={this.state.watchedToggle}
             handleInfo={this.handleInfo}
             moveToWatchList={this.moveToWatchList}
-            moveToWatched={this.moveToWatched} />
+            moveToWatched={this.moveToWatched}
+            infoToggle={this.state.infoClicked} />
         </div>
 
       </div>
@@ -165,5 +161,3 @@ class App extends React.Component {
 };
 
 export default App;
-
-{/* <MoviesList state={this.state} onClick={this.moveBetweenLists} filterWatched={filterWatched} filterToWatch={filterToWatch} /> */}
