@@ -1,10 +1,57 @@
+# Movie List
+This is a project I completed as a student at [hackreactor](http://hackreactor.com). This project was worked on independently.
 
-# Movie Browser App
+This app allow users to search for a movie and add it to a "watchlist" or a "watched" list. 
+
+This app was created using React to interact with a RESTful API powered by Node.js using an Express server.
 
 ## Getting Started
 
-- Fork and Clone this repo
-- Build the app https://gist.github.com/beth/3e7eb34ff1a46b674d40ece896c593c2
-- To start webpack, run `npm run build`
-- To start the app, run `npm start`
-* These commands should be ran in seperate terminal windows at the same time. 
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+What things you need to install the software and how to install them
+
+```
+node 12.16.1
+```
+
+### Installing
+
+```
+npm install
+```
+
+### Start Server
+This repo uses live server to run its server. To start
+
+```
+npm start
+```
+
+### Start Webpack
+
+```
+npm run build
+```
+
+## Built With
+
+* [node.js](https://nodejs.org/en/)
+* [React](https://reactjs.org/)
+
+## Authors
+
+* **Hieu Ho** - *Initial work* - [AmiraVomir](https://github.com/AmiraVomir)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+This project would not have been possible without all the support and encouragement from:
+
+* Family and friends
+* HackReactor
